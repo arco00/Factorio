@@ -3,45 +3,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
-
-public class BaseUsine : MonoBehaviour
+public class BaseUsine : BaseObject
 {
     // Start is called before the first frame update
     [SerializeField] BaseRecipe recipeRef = null;
-    [SerializeField] BaseChest stockageRef = null;
+    [SerializeField] FilterInputContainer stockageRef = null;
+    [SerializeField] OutputContainer outputRef = null;
+    [SerializeField] AllInputs controls = null;
+    [SerializeField] InputAction launchCraft =null;
+    
 
-
-    public event Action craftItem = null;
-    public event Action addItemEvent = null;
-
-    public Action CraftItem => craftItem;
-    public Action AddItemEvent => addItemEvent;
-    public BaseChest StockageRef => stockageRef;
+    public Action craftItem = null;
  
-    void Start()
+    public FilterInputContainer StockageRef => stockageRef;
+
+    public OutputContainer OutputRef => outputRef;
+
+    private void Awake()
     {
         recipeRef = GetComponent<BaseRecipe>();
-        stockageRef = GetComponent<BaseChest>();
-       
-   
+        stockageRef = GetComponent<FilterInputContainer>();
+        outputRef =  GetComponent<OutputContainer>();
+
+        controls = new AllInputs();   
+    }
+
+    protected override void Start()
+    {
+       base.Start();
+        //stockageRef.WhiteList=recipeRef.
     }
     private void OnEnable()
     {
-        addItemEvent += recipeRef.CheckCraft;
+        stockageRef.addItemEvent += recipeRef.CheckCraft;
+
+        launchCraft = controls.InputTest.LaunchCraft;
+        launchCraft.Enable();
+        launchCraft.performed += recipeRef.InputCheckCraft;
+        launchCraft.performed += Test;
+        launchCraft.performed += (_context) => { outputRef.SearchAllOuput(); };
     }
 
-    private void OnDisable()
-    {
-        addItemEvent -= ( recipeRef.CheckCraft);
-    }
 
     // Update is called once per frame
     void Update()
     {
-        recipeRef.CheckCraft();
+
+    }
+    void Test (InputAction.CallbackContext _context)
+    {
+        Debug.Log("test");
     }
 
-    
+
 
 }

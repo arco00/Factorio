@@ -1,0 +1,34 @@
+{
+    "name": "AllInputs",
+    "maps": [
+        {
+            "name": "InputTest",
+            "id": "e7ffda0b-93d4-4027-8ba4-b4529c80f4d6",
+            "actions": [
+                {
+                    "name": "LaunchCraft",
+                    "type": "Button",
+                    "id": "cb17eb80-6981-4219-8800-ca0229a80b58",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "72382144-6211-4e34-b70c-0379a5fd6605",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LaunchCraft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BaseItem : MonoBehaviour
 {
+    [SerializeField] const string nameItem = "Item";
+
+    public string NameItem => nameItem;
+
     // Start is called before the first frame update
     void Start()
     {
