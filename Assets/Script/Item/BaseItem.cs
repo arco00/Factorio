@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseItem : MonoBehaviour
 {
-    [SerializeField] const string nameItem = "Item";
+    [SerializeField]  string nameItem = "Item";
 
     public string NameItem => nameItem;
 

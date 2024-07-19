@@ -38,7 +38,7 @@ public class GridManager : MonoBehaviour
         {
             // Debug.Log(_result.gameObject.GetComponent(_class).name.ToString());
             //pas la bonne comparaison 
-            bool _bool = _result.GameObject.GetComponent("InputContainer") != null;
+            bool _bool = _result.GameObject.GetComponent(_class) != null;
             Debug.Log(_bool);
             Debug.Log(_result.GameObject.GetComponent<BaseObject>().ToString());
             return _bool ;

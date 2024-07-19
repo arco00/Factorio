@@ -10,10 +10,10 @@ public class InputContainer : BaseContainer
         base.Start();
     }
 
-    public override bool AddItem(ItemStruct _items)
+    public override void AddItem(ItemStruct _items)
     {
         addItemEvent.Invoke();
-        return  base.AddItem( _items );
+        base.AddItem( _items );
     }
 
 

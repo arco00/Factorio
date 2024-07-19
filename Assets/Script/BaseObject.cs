@@ -17,9 +17,6 @@ public class BaseObject : MonoBehaviour
         //broadcast shearch input/output
     }
 
-    
-
-   
 
     // Update is called once per frame
     void Update()

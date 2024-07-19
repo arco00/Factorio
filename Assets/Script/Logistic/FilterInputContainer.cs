@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FilterInputContainer : InputContainer
@@ -18,4 +19,20 @@ public class FilterInputContainer : InputContainer
     {
         
     }
+
+    public override bool CanAddItem(ItemStruct _items)
+    { 
+        //filter input work fine
+       foreach (BaseItem _item in whiteListItems)
+       {
+            if (_item.NameItem == _items.Item.NameItem) // if item is in white list do standard test
+            {
+                 base.AddItem(_items);
+            }
+       }
+       return false;
+
+    }
+
+  
 }

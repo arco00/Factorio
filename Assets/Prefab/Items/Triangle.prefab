@@ -97,4 +97,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9082cff6636d4c643b591d4de055d6d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Triangle
+  nameItem: Triangle
