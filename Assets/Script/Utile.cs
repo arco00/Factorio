@@ -31,12 +31,12 @@ public struct ItemStruct
     public BaseItem Item { get { return item; } set { item = value; } }
     public int Number { get { return number; } set { number = value; } }
 
-        public ItemStruct(BaseItem _item,int _number)
-        {
-            item = _item;
-            number = _number;
-        }
-    }
+   public ItemStruct(BaseItem _item,int _number)
+   {
+       item = _item;
+       number = _number;
+   }
+}
 
 public static class Utile
 {

@@ -390,11 +390,12 @@ MonoBehaviour:
   listItems:
   - item: {fileID: 3556819038606858876, guid: c1eeb588abf1e6a478a62dfd685ac725, type: 3}
     number: 10
+  maxItem: 30
   currentItemNumber: 0
   gridManager: {fileID: 0}
   objectRef: {fileID: 0}
   allOuput: []
-  test: 1
+  outputTime: 0.2
   testItem:
     item: {fileID: 3556819038606858876, guid: c1eeb588abf1e6a478a62dfd685ac725, type: 3}
     number: 1
@@ -622,7 +623,7 @@ MonoBehaviour:
   grid: {fileID: 0}
   gridManager: {fileID: 0}
   recipeRef: {fileID: 0}
-  stockageRef: {fileID: 0}
+  inputRef: {fileID: 0}
   outputRef: {fileID: 0}
   launchCraft:
     m_Name: Launch Craft
@@ -647,9 +648,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usineRef: {fileID: 0}
   itemNeededForCraft:
-  - item: {fileID: 0}
-    number: 0
-  itemToCraft: []
+  - item: {fileID: 3556819038606858876, guid: c1eeb588abf1e6a478a62dfd685ac725, type: 3}
+    number: 3
+  itemToCraft:
+  - item: {fileID: 6691680871338395509, guid: 50affbda4043206448d1ce59bada2008, type: 3}
+    number: 2
   craftingTime: 1
   currentCraftingTime: 0
   canCraft: 0
@@ -666,11 +669,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listItems: []
+  maxItem: 30
   currentItemNumber: 0
   gridManager: {fileID: 0}
   objectRef: {fileID: 0}
   allOuput: []
-  test: 1
+  outputTime: 0.2
   testItem:
     item: {fileID: 0}
     number: 0
@@ -686,7 +690,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e92955710aeaf44bb58dde1fea1e4ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listItems: []
+  listItems:
+  - item: {fileID: 3556819038606858876, guid: c1eeb588abf1e6a478a62dfd685ac725, type: 3}
+    number: 10
+  maxItem: 30
   currentItemNumber: 0
   gridManager: {fileID: 0}
   objectRef: {fileID: 0}

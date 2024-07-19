@@ -11,11 +11,11 @@ public class BaseRecipe : MonoBehaviour
     [SerializeField] BaseUsine usineRef = null;
     [SerializeField] List<ItemStruct> itemNeededForCraft = null;
     [SerializeField] List<ItemStruct> itemToCraft=null;
-    [SerializeField] float craftingTime = 100;
-    [SerializeField] float currentCraftingTime=0;
+    [SerializeField] float craftingTime = 1;
+    [SerializeField] float numberItemNeededForCraft = 1;
     [SerializeField] bool canCraft =false ;
 
-    public List<ItemStruct> ItemNeedesForCraft => itemNeededForCraft;
+    public List<ItemStruct> ItemNeededForCraft => itemNeededForCraft;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -24,11 +24,9 @@ public class BaseRecipe : MonoBehaviour
     }
     void Start()
     {
-    }
-
-    private void OnEnable()
-    {
+        InvokeRepeating(nameof(CheckCraft), craftingTime, craftingTime);
         usineRef.craftItem += (AllCreateAndRemove);
+        InitNumberItemNeededForCraft();
     }
 
 
@@ -43,31 +41,15 @@ public class BaseRecipe : MonoBehaviour
         { 
             usineRef.OutputRef.AddItem(_item);
         }
-        
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!canCraft)
-        {
-            //timer for not instant craft
-            if (Utile.Timer(ref currentCraftingTime, ref craftingTime))
-            {
-                canCraft = true;
-                currentCraftingTime = 0;
-            }
-        }
-    }
-
     
     public void CheckCraft()
     {
+        if (usineRef.InputRef.CurrentItemNumber <= numberItemNeededForCraft) return;
         Debug.Log("checkcraft");
-        if (HasItemRequired() && canCraft)
+        if (HasItemRequired())
         {
-            usineRef.craftItem?.Invoke();
-            canCraft = false;
+            usineRef.craftItem?.Invoke();  
         }
         else { return; }
     }
@@ -83,12 +65,20 @@ public class BaseRecipe : MonoBehaviour
             _craftable= _craftable && usineRef.InputRef.CanRemoveItem(_item) && usineRef.OutputRef.CanAddItem(_item);
         }
         return _craftable;
-
     }
 
     public void InputCheckCraft (InputAction.CallbackContext _context)
     {
         Debug.Log("testInput");
         CheckCraft();
+    }
+
+    protected void InitNumberItemNeededForCraft()
+    {
+        numberItemNeededForCraft = 0;
+        foreach(ItemStruct _items in itemNeededForCraft)
+        {
+            numberItemNeededForCraft += _items.Number;
+        }
     }
 }

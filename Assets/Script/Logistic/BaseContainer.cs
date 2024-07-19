@@ -14,6 +14,7 @@ public class BaseContainer : MonoBehaviour
     [SerializeField] protected BaseObject objectRef = null;
 
     public Action addItemEvent = null;
+    public float CurrentItemNumber => currentItemNumber;
 
 
     // Start is called before the first frame update
@@ -29,7 +30,7 @@ public class BaseContainer : MonoBehaviour
     public virtual bool CanAddItem(ItemStruct _items)
     {
         //if not enough place 
-        return (currentItemNumber + _items.Number <= maxItem);
+        return ((currentItemNumber + _items.Number) < maxItem);
     }
 
     public virtual bool CanRemoveItem(ItemStruct _items)
@@ -39,13 +40,12 @@ public class BaseContainer : MonoBehaviour
         if (currentItemNumber < _items.Number) { return false; }
         
         //search good item and test number of it
-        int _size = listItems.Count;
-        for (int i = 0; i < _size; i++)
+        foreach (ItemStruct _itemList in listItems)
         {
-            if (listItems[i].Item.NameItem == _items.Item.NameItem)
+            if (_itemList.Item.NameItem == _items.Item.NameItem)
             {
                 //test if enough item of this type
-                if (listItems[i].Number - _items.Number < 0)  return false; 
+                if (_itemList.Number - _items.Number < 0)  return false; 
                 return true;
             }
         }
@@ -62,6 +62,7 @@ public class BaseContainer : MonoBehaviour
 
     public virtual void RemoveItem(ItemStruct _items)
     {
+        if (!CanRemoveItem(_items)) { return; }
         //don't remove
         int _size = listItems.Count;
         for (int i = 0; i < _size; i++)
@@ -82,7 +83,9 @@ public class BaseContainer : MonoBehaviour
 
     public virtual void AddItem(ItemStruct _items)
     {
-        if (CanAddItem(_items)) { return; }
+       
+        if (!CanAddItem(_items)) { return; }
+
         int _size = listItems.Count;
         for (int i = 0; i < _size; i++)
         {

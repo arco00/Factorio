@@ -27,7 +27,7 @@ public class FilterInputContainer : InputContainer
        {
             if (_item.NameItem == _items.Item.NameItem) // if item is in white list do standard test
             {
-                 base.AddItem(_items);
+                 return base.CanAddItem(_items);
             }
        }
        return false;

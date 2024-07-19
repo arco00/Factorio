@@ -11,6 +11,7 @@ public class BaseUsine : BaseObject
     [SerializeField] BaseRecipe recipeRef = null;
     [SerializeField] FilterInputContainer inputRef = null;
     [SerializeField] OutputContainer outputRef = null;
+
     [SerializeField] AllInputs controls = null;
     [SerializeField] InputAction launchCraft =null;
     
@@ -51,7 +52,8 @@ public class BaseUsine : BaseObject
     // Update is called once per frame
     void Update()
     {
-
+        
+        
     }
     void Test (InputAction.CallbackContext _context)
     {
@@ -61,7 +63,7 @@ public class BaseUsine : BaseObject
     void InitFilter()
     {
         inputRef.WhiteList.Clear();
-        foreach (ItemStruct _item in recipeRef.ItemNeedesForCraft)
+        foreach (ItemStruct _item in recipeRef.ItemNeededForCraft)
         {
             inputRef.WhiteList.Add(_item.Item);
         }

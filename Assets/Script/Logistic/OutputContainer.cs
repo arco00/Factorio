@@ -6,9 +6,7 @@ public class OutputContainer : BaseContainer
 {
     
     [SerializeField] protected List<Vector2Int> allOuput = new List<Vector2Int>();
-    [SerializeField] bool test = true;
-    [SerializeField] bool canOuput = true;
-    [SerializeField] float outputTime = .2f,currentOutputTime=0;
+    [SerializeField] float outputTime = .2f;
 
     //for testing 
     [SerializeField] ItemStruct testItem ;
@@ -16,32 +14,14 @@ public class OutputContainer : BaseContainer
     protected override void Start()
     {
         base.Start();
+        Invoke(nameof(SearchAllOuput), .1f);
+        InvokeRepeating(nameof(AllOutput), outputTime, outputTime);
         //SearchAllOuput();
     }
 
     private void Update()
     {
-        //to activate shearcj output for testing and debuging
-        if (test) { 
-            SearchAllOuput();
-            test = false;
-        }
-
-        if (canOuput)
-        {
-            AllOutput(testItem);
-            Debug.Log("allouput");
-        }
-        else
-        {
-            if (Utile.Timer(ref currentOutputTime, ref outputTime ))
-            {
-                canOuput = true;
-                currentOutputTime = 0;
-            };
-        }
-    
-
+       
     }
     public void SearchAllOuput()
     {
@@ -65,25 +45,28 @@ public class OutputContainer : BaseContainer
         }    
     }
 
-    void AllOutput(ItemStruct _item)
+    void AllOutput()
     {
-        foreach (Vector2Int _vect in allOuput)
-        {
-            Output(_item, _vect);
-        }
+        Debug.Log("allouptu");
+        if (currentItemNumber <= 0 || allOuput.Count<=0 ) return;
+    
+            foreach (Vector2Int _vect in allOuput)
+            {
+                Output(testItem, _vect);
+            }
+        
     }
     
     void Output(ItemStruct _item, Vector2Int _loc)
     {
         gridManager.PosTaken(_loc, out TilemapSlot _result);
         //test if output is possible
-        //Debug.Log(_result.GameObject.GetComponent<InputContainer>().CanAddItem(_item));
+        Debug.Log(_result.GameObject.GetComponent<InputContainer>().CanAddItem(_item));
         if (_result.GameObject.GetComponent<InputContainer>().CanAddItem(_item) && CanRemoveItem(_item))
         {
             Debug.Log("add");
             RemoveItem(_item);
             _result.GameObject.GetComponent<InputContainer>().AddItem(_item);
-            canOuput = false;
         }
     }
 }

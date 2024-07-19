@@ -35,6 +35,15 @@ public partial class @AllInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlaceObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""3d03736c-1cf1-4a79-94a6-ce9982fd8542"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,6 +57,17 @@ public partial class @AllInputs: IInputActionCollection2, IDisposable
                     ""action"": ""LaunchCraft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9591cd7-9a3f-4825-820a-60bd5e9318f0"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaceObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -57,6 +77,7 @@ public partial class @AllInputs: IInputActionCollection2, IDisposable
         // InputTest
         m_InputTest = asset.FindActionMap("InputTest", throwIfNotFound: true);
         m_InputTest_LaunchCraft = m_InputTest.FindAction("LaunchCraft", throwIfNotFound: true);
+        m_InputTest_PlaceObject = m_InputTest.FindAction("PlaceObject", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -119,11 +140,13 @@ public partial class @AllInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_InputTest;
     private List<IInputTestActions> m_InputTestActionsCallbackInterfaces = new List<IInputTestActions>();
     private readonly InputAction m_InputTest_LaunchCraft;
+    private readonly InputAction m_InputTest_PlaceObject;
     public struct InputTestActions
     {
         private @AllInputs m_Wrapper;
         public InputTestActions(@AllInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @LaunchCraft => m_Wrapper.m_InputTest_LaunchCraft;
+        public InputAction @PlaceObject => m_Wrapper.m_InputTest_PlaceObject;
         public InputActionMap Get() { return m_Wrapper.m_InputTest; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,6 +159,9 @@ public partial class @AllInputs: IInputActionCollection2, IDisposable
             @LaunchCraft.started += instance.OnLaunchCraft;
             @LaunchCraft.performed += instance.OnLaunchCraft;
             @LaunchCraft.canceled += instance.OnLaunchCraft;
+            @PlaceObject.started += instance.OnPlaceObject;
+            @PlaceObject.performed += instance.OnPlaceObject;
+            @PlaceObject.canceled += instance.OnPlaceObject;
         }
 
         private void UnregisterCallbacks(IInputTestActions instance)
@@ -143,6 +169,9 @@ public partial class @AllInputs: IInputActionCollection2, IDisposable
             @LaunchCraft.started -= instance.OnLaunchCraft;
             @LaunchCraft.performed -= instance.OnLaunchCraft;
             @LaunchCraft.canceled -= instance.OnLaunchCraft;
+            @PlaceObject.started -= instance.OnPlaceObject;
+            @PlaceObject.performed -= instance.OnPlaceObject;
+            @PlaceObject.canceled -= instance.OnPlaceObject;
         }
 
         public void RemoveCallbacks(IInputTestActions instance)
@@ -163,5 +192,6 @@ public partial class @AllInputs: IInputActionCollection2, IDisposable
     public interface IInputTestActions
     {
         void OnLaunchCraft(InputAction.CallbackContext context);
+        void OnPlaceObject(InputAction.CallbackContext context);
     }
 }

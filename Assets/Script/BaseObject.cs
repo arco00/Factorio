@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class BaseObject : MonoBehaviour
+public abstract class BaseObject : MonoBehaviour
 {
     [SerializeField] protected Vector2Int location = new Vector2Int(0, 0);
+    [SerializeField] protected Vector2Int size = new Vector2Int(1, 1);
     [SerializeField] protected Grid grid = null;
     [SerializeField] protected GridManager gridManager = null;
     // Start is called before the first frame update
@@ -20,6 +21,11 @@ public class BaseObject : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    protected virtual void Placement()
     {
         
     }

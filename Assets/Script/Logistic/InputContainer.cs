@@ -12,8 +12,8 @@ public class InputContainer : BaseContainer
 
     public override void AddItem(ItemStruct _items)
     {
-        addItemEvent.Invoke();
         base.AddItem( _items );
+        addItemEvent.Invoke();
     }
 
 
