@@ -12,8 +12,6 @@ public class BaseUsine : BaseObject
     [SerializeField] FilterInputContainer inputRef = null;
     [SerializeField] OutputContainer outputRef = null;
 
-    [SerializeField] AllInputs controls = null;
-    [SerializeField] InputAction launchCraft =null;
     
 
     public Action craftItem = null;
@@ -27,8 +25,7 @@ public class BaseUsine : BaseObject
         recipeRef = GetComponent<BaseRecipe>();
         inputRef = GetComponent<FilterInputContainer>();
         outputRef =  GetComponent<OutputContainer>();
-
-        controls = new AllInputs();   
+  
     }
 
     protected override void Start()
@@ -36,28 +33,16 @@ public class BaseUsine : BaseObject
        base.Start();
         InitFilter();
     }
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         inputRef.addItemEvent += recipeRef.CheckCraft;
 
-        launchCraft = controls.InputTest.LaunchCraft;
-        launchCraft.Enable();
-
-        launchCraft.performed += recipeRef.InputCheckCraft;
+        //launchCraft = controls.InputTest.LaunchCraft;
+        //launchCraft.Enable();
+        //launchCraft.performed += recipeRef.InputCheckCraft;
         //launchCraft.performed += Test;
         //launchCraft.performed += (_context) => { outputRef.SearchAllOuput(); };
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-        
-    }
-    void Test (InputAction.CallbackContext _context)
-    {
-        Debug.Log("test");
     }
 
     void InitFilter()

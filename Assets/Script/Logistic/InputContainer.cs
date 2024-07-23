@@ -8,12 +8,42 @@ public class InputContainer : BaseContainer
     protected override void Start()
     {
         base.Start();
+        objectRef.OnPlacement += AddToNeighborOutput;
+        objectRef.OnRemoval += RemoveToNeighborOutput;
     }
 
     public override void AddItem(ItemStruct _items)
     {
         base.AddItem( _items );
         addItemEvent.Invoke();
+    }
+
+    public virtual void AddToNeighborOutput(BaseObject _object)
+    {
+        foreach(Vector2Int _loc in objectRef.NeighborList)
+        {
+            TilemapSlot _result ;
+            if (objectRef.GridManager.PosTaken(_loc, out _result))
+            {
+                OutputContainer _outpuContainer = _result.BaseObject.GetComponent<OutputContainer>();
+                if (!_outpuContainer) continue;
+                _outpuContainer.AllOutput.Add(objectRef.Location);
+            }
+        }
+    }
+
+    public virtual void RemoveToNeighborOutput(BaseObject _object)
+    {
+        foreach (Vector2Int _loc in objectRef.NeighborList)
+        {
+            TilemapSlot _result;
+            if (objectRef.GridManager.PosTaken(_loc, out _result))
+            {
+                OutputContainer _outpuContainer = _result.BaseObject.GetComponent<OutputContainer>();
+                if (!_outpuContainer) continue;
+                _outpuContainer.AllOutput.Remove(objectRef.Location);
+            }
+        }
     }
 
 

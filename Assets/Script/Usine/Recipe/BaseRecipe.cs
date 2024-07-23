@@ -13,7 +13,6 @@ public class BaseRecipe : MonoBehaviour
     [SerializeField] List<ItemStruct> itemToCraft=null;
     [SerializeField] float craftingTime = 1;
     [SerializeField] float numberItemNeededForCraft = 1;
-    [SerializeField] bool canCraft =false ;
 
     public List<ItemStruct> ItemNeededForCraft => itemNeededForCraft;
     // Start is called before the first frame update

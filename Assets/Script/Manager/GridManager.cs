@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class GridManager : Singleton<GridManager>
 {
+    //public class UIManager : Singleton<UIManager>
     [SerializeField] List<TilemapSlot> listTilemap = new List<TilemapSlot>();
     [SerializeField] protected Grid grid = null;
     // Start is called before the first frame update
-    void Awake()
+    public Grid Grid => grid;   
+    protected override void Awake()
     {
-        grid = GetComponent<Grid>();
+        base.Awake();
     }
 
     public  Vector3Int GetGridPos(Vector3 _pos)
@@ -39,7 +41,7 @@ public class GridManager : MonoBehaviour
         _gameObject.transform.position = grid.CellToWorld(new Vector3Int(_pos.x, _pos.y, 0));
         return true;
     }
-    public bool ObjectAtPos(Vector2Int _pos,string _class)
+    public bool ObjectOfTypeAtPos(Vector2Int _pos,string _class)
     {
         // know if ther is an object of type class at pos
         //changer la 2eme var
@@ -49,7 +51,7 @@ public class GridManager : MonoBehaviour
         {
             // Debug.Log(_result.gameObject.GetComponent(_class).name.ToString());
             //pas la bonne comparaison 
-            bool _bool = _result.GameObject.GetComponent(_class) != null;
+            bool _bool = _result.BaseObject.GetComponent(_class) != null;
             //Debug.Log(_bool);
             //Debug.Log(_result.GameObject.GetComponent<BaseObject>().ToString());
             return _bool ;

@@ -8,44 +8,44 @@ public class OutputContainer : BaseContainer
     [SerializeField] protected List<Vector2Int> allOuput = new List<Vector2Int>();
     [SerializeField] float outputTime = .2f;
 
+    public List<Vector2Int> AllOutput => allOuput;
     //for testing 
     [SerializeField] ItemStruct testItem ;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        Invoke(nameof(SearchAllOuput), .1f);
-        InvokeRepeating(nameof(AllOutput), outputTime, outputTime);
-        //SearchAllOuput();
+        Invoke(nameof(SearchAllOuputs), .1f);
+        InvokeRepeating(nameof(OutputAtAllOutputs), outputTime, outputTime);
+        objectRef.OnPlacement += (_object) => { SearchAllOuputs(_object.Location); };
     }
 
     private void Update()
     {
        
     }
-    public void SearchAllOuput()
+    public void SearchAllOuputs(Vector2Int _loc)
     {
         allOuput.Clear();
-        SearchOutput(new Vector2Int(0, 1));
-        SearchOutput(new Vector2Int(1, 0));
-        SearchOutput(new Vector2Int(0, -1));
-        SearchOutput(new Vector2Int(-1,0 ));
+        foreach (Vector2Int _locNeighbor in objectRef.NeighborList) {
+            SearchOutput(_locNeighbor);
+        }
     }
     void SearchOutput(Vector2Int _localLoc)
     {
         //Debug.Log("search output");
         //TilemapSlot _result = new TilemapSlot();
-        Vector3Int _3DLoc = gridManager.GetGridPos(transform.position);
+        Vector3Int _3DLoc = objectRef.GridManager.GetGridPos(transform.position);
         Vector2Int _loc =new Vector2Int(_3DLoc.x+_localLoc.x, _3DLoc.y+_localLoc.y);
         //Debug.Log(_loc);
         //gridManager.PosTaken(_loc, ref _result);
-        if (gridManager.ObjectAtPos(_loc, "InputContainer"))
+        if (objectRef.GridManager.ObjectOfTypeAtPos(_loc, "InputContainer"))
         { 
         allOuput.Add(_loc);
         }    
     }
 
-    void AllOutput()
+    void OutputAtAllOutputs()
     {
         Debug.Log("allouptu");
         if (currentItemNumber <= 0 || allOuput.Count<=0 ) return;
@@ -59,14 +59,14 @@ public class OutputContainer : BaseContainer
     
     void Output(ItemStruct _item, Vector2Int _loc)
     {
-        gridManager.PosTaken(_loc, out TilemapSlot _result);
+        objectRef.GridManager.PosTaken(_loc, out TilemapSlot _result);
         //test if output is possible
-        Debug.Log(_result.GameObject.GetComponent<InputContainer>().CanAddItem(_item));
-        if (_result.GameObject.GetComponent<InputContainer>().CanAddItem(_item) && CanRemoveItem(_item))
+        Debug.Log(_result.BaseObject.GetComponent<InputContainer>().CanAddItem(_item));
+        if (_result.BaseObject.GetComponent<InputContainer>().CanAddItem(_item) && CanRemoveItem(_item))
         {
             Debug.Log("add");
             RemoveItem(_item);
-            _result.GameObject.GetComponent<InputContainer>().AddItem(_item);
+            _result.BaseObject.GetComponent<InputContainer>().AddItem(_item);
         }
     }
 }

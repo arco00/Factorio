@@ -5,7 +5,6 @@ using UnityEngine;
 public class Choose : BaseButton
 {
     [SerializeField] BaseObject objectToPlace = null;
-    [SerializeField] PlaceObject placeObject = null;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -14,15 +13,9 @@ public class Choose : BaseButton
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     protected override void Behaviour()
     {
         base.Behaviour();
-        placeObject.SetObjectToPlace(objectToPlace);
+        InputManager.Instance.SetObjectToPlace(objectToPlace);
     }
 }

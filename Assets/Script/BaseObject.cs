@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -5,28 +6,34 @@ using UnityEngine;
 
 public abstract class BaseObject : MonoBehaviour
 {
+    public Action<BaseObject> OnPlacement;
+    public Action<BaseObject> OnRemoval;
     [SerializeField] protected Vector2Int location = new Vector2Int(0, 0);
     [SerializeField] protected Vector2Int size = new Vector2Int(1, 1);
-    [SerializeField] protected Grid grid = null;
+    [SerializeField] protected List<Vector2Int> neighborList = new List<Vector2Int>();
     [SerializeField] protected GridManager gridManager = null;
-    // Start is called before the first frame update
+
+    public GridManager GridManager => gridManager;
+    public List<Vector2Int> NeighborList => neighborList;
+    public Vector2Int Location => location;
     protected virtual void Start()
     {
-        grid=FindAnyObjectByType<Grid>();
-        gridManager=grid.GetComponent<GridManager>();
-        gridManager.SetGridPosAt(location,this);
+        gridManager = GridManager.Instance;
+        gridManager.SetGridPosAt(location, this);
+        neighborList = Utile.GetNeighbor(location, size);
         //broadcast shearch input/output
+         OnPlacement.Invoke(this) ; 
+       
     }
 
-
-    // Update is called once per frame
-    void Update()
+    protected virtual void OnEnable()
     {
-        
     }
 
-    protected virtual void Placement()
+    protected virtual void OnDisable()
     {
-        
+        OnRemoval.Invoke(this);
     }
+
+
 }

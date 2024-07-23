@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlaceObject : MonoBehaviour
+public class InputManager : Singleton<InputManager> 
 {
     [SerializeField] BaseObject objectToPlace = null;
     [SerializeField] AllInputs controls = null;
@@ -11,34 +11,29 @@ public class PlaceObject : MonoBehaviour
     [SerializeField] protected GridManager gridManager = null;
     // Start is called before the first frame update
 
-    public BaseObject ObjectToPlace=>objectToPlace;
+    public BaseObject ObjectToPlace => objectToPlace;
     public void SetObjectToPlace(BaseObject _object) { objectToPlace = _object; }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         controls = new AllInputs();
-        gridManager=GetComponent<GridManager>();
     }
     void Start()
     {
         place = controls.InputTest.PlaceObject;
         place.Enable();
-
         place.performed += PlaceObjectAction;
+        gridManager = GridManager.Instance;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void PlaceObjectAction(InputAction.CallbackContext _context)
     {
         if (!objectToPlace) return;
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Debug.Log(_mousePos);
-        Vector3Int _gridPos= gridManager.GetGridPos(_mousePos);
+        Vector3Int _gridPos = gridManager.GetGridPos(_mousePos);
         if (gridManager.PosTaken(_gridPos))
         {
             Debug.Log("pose prise");

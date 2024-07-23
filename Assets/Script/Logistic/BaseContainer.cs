@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using System.Data.SqlTypes;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 using static UnityEditor.Progress;
 
 public class BaseContainer : MonoBehaviour
 {
     [SerializeField] protected List<ItemStruct> listItems = null;
     [SerializeField] protected float maxItem = 30,currentItemNumber=0;
-    [SerializeField] protected GridManager gridManager = null;
     [SerializeField] protected BaseObject objectRef = null;
 
     public Action addItemEvent = null;
     public float CurrentItemNumber => currentItemNumber;
+    public BaseObject ObjectRef => objectRef;
 
 
     // Start is called before the first frame update
@@ -22,8 +23,7 @@ public class BaseContainer : MonoBehaviour
     public List<ItemStruct> ListItems => listItems;
      protected virtual void Start()
     {
-        InitCurrentItemNumber();  
-        gridManager=FindAnyObjectByType<GridManager>();
+        InitCurrentItemNumber();
         objectRef = GetComponent<BaseObject>();
     }
 
