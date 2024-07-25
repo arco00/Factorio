@@ -103,10 +103,10 @@ MonoBehaviour:
     number: 10
   maxItem: 30
   currentItemNumber: 0
-  gridManager: {fileID: 0}
   objectRef: {fileID: 0}
-  allOuput: []
   outputTime: 0.2
+  outputContainer: {fileID: 7219537222542228413}
+  allOuput: []
   testItem:
     item: {fileID: 3556819038606858876, guid: c1eeb588abf1e6a478a62dfd685ac725, type: 3}
     number: 1
@@ -124,5 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   location: {x: 0, y: 1}
   size: {x: 1, y: 1}
-  grid: {fileID: 0}
+  neighborList: []
   gridManager: {fileID: 0}
+  inputRef: {fileID: 0}
+  outputRef: {fileID: 0}

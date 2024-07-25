@@ -2,22 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OutputContainer : BaseContainer
+public class MultiOutputContainer : BaseOutputContainer
 {
-    
     [SerializeField] protected List<Vector2Int> allOuput = new List<Vector2Int>();
-    [SerializeField] float outputTime = .2f;
-
-    public List<Vector2Int> AllOutput => allOuput;
     //for testing 
     [SerializeField] ItemStruct testItem ;
+    public List<Vector2Int> AllOutput => allOuput;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         Invoke(nameof(SearchAllOuputs), .1f);
-        InvokeRepeating(nameof(OutputAtAllOutputs), outputTime, outputTime);
         objectRef.OnPlacement += (_object) => { SearchAllOuputs(_object.Location); };
+        //outputContainer = this;
     }
 
     private void Update()
@@ -45,28 +42,18 @@ public class OutputContainer : BaseContainer
         }    
     }
 
-    void OutputAtAllOutputs()
+
+    protected override void OutputBehaviour()
     {
-        Debug.Log("allouptu");
-        if (currentItemNumber <= 0 || allOuput.Count<=0 ) return;
-    
-            foreach (Vector2Int _vect in allOuput)
-            {
-                Output(testItem, _vect);
-            }
-        
-    }
-    
-    void Output(ItemStruct _item, Vector2Int _loc)
-    {
-        objectRef.GridManager.PosTaken(_loc, out TilemapSlot _result);
-        //test if output is possible
-        Debug.Log(_result.BaseObject.GetComponent<InputContainer>().CanAddItem(_item));
-        if (_result.BaseObject.GetComponent<InputContainer>().CanAddItem(_item) && CanRemoveItem(_item))
+        if (currentItemNumber <= 0 || allOuput.Count <= 0) return;
+
+        foreach (Vector2Int _vect in allOuput)
         {
-            Debug.Log("add");
-            RemoveItem(_item);
-            _result.BaseObject.GetComponent<InputContainer>().AddItem(_item);
+            foreach(ItemStruct _item in listItems)
+            {
+                OutputAtInput (new ItemStruct(_item.Item, 1), _vect); 
+            }
         }
     }
+
 }

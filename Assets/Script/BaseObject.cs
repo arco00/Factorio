@@ -16,6 +16,7 @@ public abstract class BaseObject : MonoBehaviour
     public GridManager GridManager => gridManager;
     public List<Vector2Int> NeighborList => neighborList;
     public Vector2Int Location => location;
+    public Vector2Int Size => size; 
     protected virtual void Start()
     {
         gridManager = GridManager.Instance;
@@ -23,7 +24,6 @@ public abstract class BaseObject : MonoBehaviour
         neighborList = Utile.GetNeighbor(location, size);
         //broadcast shearch input/output
          OnPlacement.Invoke(this) ; 
-       
     }
 
     protected virtual void OnEnable()
