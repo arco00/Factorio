@@ -23,9 +23,9 @@ public class InputContainer : BaseContainer
         foreach(Vector2Int _loc in objectRef.NeighborList)
         {
             TilemapSlot _result ;
-            if (objectRef.GridManager.PosTaken(_loc, out _result))
+            if (objectRef.GridManager.PosTakenBy(_loc, out _result))
             {
-                OutputContainer _outpuContainer = _result.BaseObject.GetComponent<OutputContainer>();
+                MultiOutputContainer _outpuContainer = _result.BaseObject.GetComponent<MultiOutputContainer>();
                 if (!_outpuContainer) continue;
                 _outpuContainer.AllOutput.Add(objectRef.Location);
             }
@@ -37,9 +37,9 @@ public class InputContainer : BaseContainer
         foreach (Vector2Int _loc in objectRef.NeighborList)
         {
             TilemapSlot _result;
-            if (objectRef.GridManager.PosTaken(_loc, out _result))
+            if (objectRef.GridManager.PosTakenBy(_loc, out _result))
             {
-                OutputContainer _outpuContainer = _result.BaseObject.GetComponent<OutputContainer>();
+                MultiOutputContainer _outpuContainer = _result.BaseObject.GetComponent<MultiOutputContainer>();
                 if (!_outpuContainer) continue;
                 _outpuContainer.AllOutput.Remove(objectRef.Location);
             }

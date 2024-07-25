@@ -4,13 +4,17 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
+    Dictionary<Vector2,BaseObject> TilemapDictionary ;
     [Serializable]
     public struct TilemapSlot
     {
+
         [SerializeField] Vector2Int position;
         [SerializeField] BaseObject baseObject;
+
         public Vector2Int Position { get { return position; } set { position = value; } }
         public BaseObject BaseObject { get { return baseObject; } set { baseObject = value; } }
 
@@ -20,6 +24,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
         {
             position = _position;
             baseObject = _baseObject;
+          
         }
     }
 
@@ -63,5 +68,6 @@ public static class Utile
         return _list ;
     }
 }
+
 
     
