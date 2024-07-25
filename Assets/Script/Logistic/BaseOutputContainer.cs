@@ -24,13 +24,13 @@ public abstract class BaseOutputContainer : BaseContainer
     protected virtual void OutputAtInput(ItemStruct _item, Vector2Int _loc)
     {
         if (!CanRemoveItem(_item)) return;
-        objectRef.GridManager.PosTakenBy(_loc, out TilemapSlot _result);
+        objectRef.GridManager.PosTakenBy(_loc, out BaseObject _result);
         //test if output is possible
-        Debug.Log(_result.BaseObject.GetComponent<InputContainer>().CanAddItem(_item));
-        if (_result.BaseObject.GetComponent<InputContainer>().CanAddItem(_item) )
+        Debug.Log(_result.GetComponent<InputContainer>().CanAddItem(_item));
+        if (_result.GetComponent<InputContainer>().CanAddItem(_item) )
         {
             //Debug.Log("add");
-            _result.BaseObject.GetComponent<InputContainer>().AddItem(_item);
+            _result.GetComponent<InputContainer>().AddItem(_item);
             RemoveItem(_item);
         }
     }
@@ -39,8 +39,8 @@ public abstract class BaseOutputContainer : BaseContainer
     {
         if (!CanRemoveItem(_item)) return;
         Debug.Log("test tapis");
-        objectRef.GridManager.PosTakenBy(_loc, out TilemapSlot _result);
-        BaseContainer _container = _result.BaseObject.GetComponent<BaseContainer>();
+        objectRef.GridManager.PosTakenBy(_loc, out BaseObject _result);
+        BaseContainer _container = _result.GetComponent<BaseContainer>();
         if (!_container) return;
         InputContainer _inputContainer = _container.GetComponent<InputContainer>();
         if (_inputContainer) // put in the input container first 

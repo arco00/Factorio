@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-    Dictionary<Vector2,BaseObject> TilemapDictionary ;
     [Serializable]
     public struct TilemapSlot
     {
