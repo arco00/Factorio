@@ -7,7 +7,7 @@ using UnityEngine;
 using static UnityEditor.FilePathAttribute;
 using static UnityEditor.Progress;
 
-public class BaseContainer : MonoBehaviour
+public abstract class BaseContainer : MonoBehaviour
 {
     [SerializeField] protected List<ItemStruct> listItems = null;
     [SerializeField] protected float maxItem = 30,currentItemNumber=0;
@@ -16,11 +16,9 @@ public class BaseContainer : MonoBehaviour
     public Action addItemEvent = null;
     public float CurrentItemNumber => currentItemNumber;
     public BaseObject ObjectRef => objectRef;
-
-
-    // Start is called before the first frame update
-
     public List<ItemStruct> ListItems => listItems;
+
+
      protected virtual void Start()
     {
         InitCurrentItemNumber();
@@ -35,7 +33,7 @@ public class BaseContainer : MonoBehaviour
 
     public virtual bool CanRemoveItem(ItemStruct _items)
     {
-        Debug.Log("remove");
+        //Debug.Log("remove");
         //test if not enough item stocked
         if (currentItemNumber < _items.Number) { return false; }
         
@@ -54,6 +52,7 @@ public class BaseContainer : MonoBehaviour
 
     protected void InitCurrentItemNumber()
     {
+        currentItemNumber = 0;
         foreach(ItemStruct _item in listItems)
         {
             currentItemNumber += _item.Number;
@@ -93,7 +92,7 @@ public class BaseContainer : MonoBehaviour
             {
                 listItems[i] = new ItemStruct(listItems[i].Item, listItems[i].Number + _items.Number);
                 currentItemNumber += _items.Number;
-                Debug.Log(gameObject);
+                //Debug.Log(gameObject);
                 return;
             }
         }

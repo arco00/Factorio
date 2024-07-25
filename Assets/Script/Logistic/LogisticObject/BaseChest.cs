@@ -5,12 +5,12 @@ using UnityEngine;
 public class BaseChest : BaseObject
 {
     [SerializeField] InputContainer inputRef = null;
-    [SerializeField] OutputContainer outputRef = null;
+    [SerializeField] MultiOutputContainer outputRef = null;
     // Start is called before the first frame update
     protected override void Start()
     {
         inputRef = GetComponent<InputContainer>();
-        outputRef = GetComponent<OutputContainer>();
+        outputRef = GetComponent<MultiOutputContainer>();
         base.Start();
         
     }

@@ -10,6 +10,7 @@ public class GridManager : Singleton<GridManager>
     //public class UIManager : Singleton<UIManager>
     //[SerializeField] List<TilemapSlot> listTilemap = new List<TilemapSlot>(); passe sur un dictionary
     Dictionary<Vector2, BaseObject> tilemapDictionary;
+
     [SerializeField] protected Grid grid = null;
     // Start is called before the first frame update
     public Grid Grid => grid;
@@ -34,6 +35,7 @@ public class GridManager : Singleton<GridManager>
         //tester si la case est libre 
 
         if (tilemapDictionary.TryAdd(_pos, _gameObject))
+
         {
         _gameObject.transform.position=grid.CellToWorld(new Vector3Int(_pos.x,_pos.y,0));
         return true;
@@ -46,7 +48,9 @@ public class GridManager : Singleton<GridManager>
         //tester si la case est libre 
 
         Vector2Int _pos2D = new Vector2Int(_pos.x, _pos.y);
+
         if (tilemapDictionary.TryAdd(_pos2D, _gameObject))
+
         {
             _gameObject.transform.position = grid.CellToWorld(new Vector3Int(_pos.x, _pos.y, 0));
             return true;
@@ -70,11 +74,14 @@ public class GridManager : Singleton<GridManager>
         //    return _bool ;
         //}
         //return false;
+
         if (tilemapDictionary.TryGetValue(_pos,out BaseObject _result ))
+
         {
             return _result.GetComponent(_class) ;  
         }
         return false; 
+
     }
 
 
@@ -82,6 +89,7 @@ public class GridManager : Singleton<GridManager>
 
     public bool PosTakenBy(Vector2Int _pos, out BaseObject _result)
     {
+
         if (tilemapDictionary.ContainsKey(_pos))
         {
             _result = tilemapDictionary[(_pos)] ;
@@ -89,7 +97,21 @@ public class GridManager : Singleton<GridManager>
         }
         _result = null;
         return false;
+
+
+        
+        //foreach (Key _slot in TilemapDictionary)
+        //{
+        //    if (_slot == _pos)
+        //    {
+        //        //savoir par quoi (_slot) est prise la case
+        //        _result = _slot;
+        //        return true;
+        //    }
+        //}
+       
     }
 
+ 
 
 }

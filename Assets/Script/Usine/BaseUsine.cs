@@ -10,7 +10,7 @@ public class BaseUsine : BaseObject
     // Start is called before the first frame update
     [SerializeField] BaseRecipe recipeRef = null;
     [SerializeField] FilterInputContainer inputRef = null;
-    [SerializeField] OutputContainer outputRef = null;
+    [SerializeField] MultiOutputContainer outputRef = null;
 
     
 
@@ -18,13 +18,13 @@ public class BaseUsine : BaseObject
  
     public FilterInputContainer InputRef => inputRef;
 
-    public OutputContainer OutputRef => outputRef;
+    public MultiOutputContainer OutputRef => outputRef;
 
     private void Awake()
     {
         recipeRef = GetComponent<BaseRecipe>();
         inputRef = GetComponent<FilterInputContainer>();
-        outputRef =  GetComponent<OutputContainer>();
+        outputRef =  GetComponent<MultiOutputContainer>();
   
     }
 
