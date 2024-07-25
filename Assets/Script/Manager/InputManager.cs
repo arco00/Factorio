@@ -34,7 +34,8 @@ public class InputManager : Singleton<InputManager>
         Vector3 _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Debug.Log(_mousePos);
         Vector3Int _gridPos = gridManager.GetGridPos(_mousePos);
-        if (gridManager.PosTaken(_gridPos))
+        Vector2Int _mousePos2D = new Vector2Int(_gridPos.x,_gridPos.y);
+        if (gridManager.TilemapDictionary.ContainsKey(_mousePos2D))
         {
             Debug.Log("pose prise");
             return;

@@ -59,14 +59,14 @@ public class OutputContainer : BaseContainer
     
     void Output(ItemStruct _item, Vector2Int _loc)
     {
-        objectRef.GridManager.PosTaken(_loc, out TilemapSlot _result);
+        objectRef.GridManager.PosTakenBy(_loc, out BaseObject _result);
         //test if output is possible
-        Debug.Log(_result.BaseObject.GetComponent<InputContainer>().CanAddItem(_item));
-        if (_result.BaseObject.GetComponent<InputContainer>().CanAddItem(_item) && CanRemoveItem(_item))
+        Debug.Log(_result.GetComponent<InputContainer>().CanAddItem(_item));
+        if (_result.GetComponent<InputContainer>().CanAddItem(_item) && CanRemoveItem(_item))
         {
             Debug.Log("add");
             RemoveItem(_item);
-            _result.BaseObject.GetComponent<InputContainer>().AddItem(_item);
+            _result.GetComponent<InputContainer>().AddItem(_item);
         }
     }
 }
