@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using static UnityEditor.Progress;
+
 
 public class BaseRecipe : MonoBehaviour
 {
@@ -44,13 +42,10 @@ public class BaseRecipe : MonoBehaviour
     
     public void CheckCraft()
     {
-        if (usineRef.InputRef.CurrentItemNumber <= numberItemNeededForCraft) return;
+        if (usineRef.InputRef.CurrentItemNumber < numberItemNeededForCraft) return;
         Debug.Log("checkcraft");
-        if (HasItemRequired())
-        {
-            usineRef.craftItem?.Invoke();  
-        }
-        else { return; }
+        if (HasItemRequired()) usineRef.craftItem?.Invoke();  
+        else  return; 
     }
 
     protected virtual bool HasItemRequired()

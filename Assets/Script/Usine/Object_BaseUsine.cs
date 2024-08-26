@@ -5,26 +5,26 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class BaseUsine : BaseObject
+public class BaseUsine : Object_BaseObject
 {
     // Start is called before the first frame update
     [SerializeField] BaseRecipe recipeRef = null;
-    [SerializeField] FilterInputContainer inputRef = null;
-    [SerializeField] MultiOutputContainer outputRef = null;
+    [SerializeField] CT_FilterInputContainer inputRef = null;
+    [SerializeField] CT_MultiOutputContainer outputRef = null;
 
     
 
     public Action craftItem = null;
  
-    public FilterInputContainer InputRef => inputRef;
+    public CT_FilterInputContainer InputRef => inputRef;
 
-    public MultiOutputContainer OutputRef => outputRef;
+    public CT_MultiOutputContainer OutputRef => outputRef;
 
     private void Awake()
     {
         recipeRef = GetComponent<BaseRecipe>();
-        inputRef = GetComponent<FilterInputContainer>();
-        outputRef =  GetComponent<MultiOutputContainer>();
+        inputRef = GetComponent<CT_FilterInputContainer>();
+        outputRef =  GetComponent<CT_MultiOutputContainer>();
   
     }
 
@@ -36,7 +36,7 @@ public class BaseUsine : BaseObject
     protected override void OnEnable()
     {
         base.OnEnable();
-        inputRef.addItemEvent += recipeRef.CheckCraft;
+        inputRef.OnAddItemEvent += (_items) =>  recipeRef.CheckCraft(); 
 
         //launchCraft = controls.InputTest.LaunchCraft;
         //launchCraft.Enable();

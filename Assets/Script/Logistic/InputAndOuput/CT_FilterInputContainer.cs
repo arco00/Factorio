@@ -1,9 +1,9 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
-public class FilterInputContainer : InputContainer
+public class CT_FilterInputContainer : CT_InputContainer
 {
     [SerializeField] List<BaseItem> whiteListItems = new List<BaseItem>();
     public List<BaseItem> WhiteList => whiteListItems;

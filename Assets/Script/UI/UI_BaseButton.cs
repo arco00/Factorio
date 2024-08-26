@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class BaseButton : MonoBehaviour
+public abstract class UI_BaseButton : MonoBehaviour
 {
     [SerializeField] protected Button button = null;
     [SerializeField] protected TextMeshProUGUI text = null;

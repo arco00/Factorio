@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class InputContainer : BaseContainer
+public class CT_InputContainer : CT_BaseContainer
 {
     // Start is called before the first frame update
     protected override void Start()
@@ -15,17 +14,16 @@ public class InputContainer : BaseContainer
     public override void AddItem(ItemStruct _items)
     {
         base.AddItem( _items );
-        addItemEvent.Invoke();
     }
 
-    public virtual void AddToNeighborOutput(BaseObject _object)
+    public virtual void AddToNeighborOutput(Object_BaseObject _object)
     {
         foreach(Vector2Int _loc in objectRef.NeighborList)
         {
 
-            if (objectRef.GridManager.PosTakenBy(_loc, out BaseObject _result))
+            if (objectRef.GridManager.PosTakenBy(_loc, out Object_BaseObject _result))
             {
-                MultiOutputContainer _outpuContainer =_result.GetComponent<MultiOutputContainer>();
+                CT_MultiOutputContainer _outpuContainer =_result.GetComponent<CT_MultiOutputContainer>();
 
                 if (!_outpuContainer) continue;
                 _outpuContainer.AllOutput.Add(objectRef.Location);
@@ -33,15 +31,13 @@ public class InputContainer : BaseContainer
         }
     }
 
-    public virtual void RemoveToNeighborOutput(BaseObject _object)
+    public virtual void RemoveToNeighborOutput(Object_BaseObject _object)
     {
         foreach (Vector2Int _loc in objectRef.NeighborList)
-        {
-
-            
-            if (objectRef.GridManager.PosTakenBy(_loc, out BaseObject _result))
+        { 
+            if (objectRef.GridManager.PosTakenBy(_loc, out Object_BaseObject _result))
             {
-                MultiOutputContainer _outpuContainer = _result.GetComponent<MultiOutputContainer>();
+                CT_MultiOutputContainer _outpuContainer = _result.GetComponent<CT_MultiOutputContainer>();
 
                 if (!_outpuContainer) continue;
                 _outpuContainer.AllOutput.Remove(objectRef.Location);

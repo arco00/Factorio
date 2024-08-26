@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class MonoOutputContainer : BaseOutputContainer
+public class CT_MonoOutputContainer : CT_BaseOutputContainer
 {
-    [SerializeField] protected Vector2Int outputLoc = new Vector2Int();
+    [SerializeField,Header("Mono Output")] protected Vector2Int outputLoc = new Vector2Int();
     
     public Vector2Int OutputLoc { get; set; }
     // Start is called before the first frame update
@@ -16,17 +15,21 @@ public class MonoOutputContainer : BaseOutputContainer
         //InvokeRepeating(nameof(OutputBehaviour), outputTime,outputTime);
     }
 
-    void Update()
-    {
-        
-    }
+  
 
     protected override void OutputBehaviour()
     {
-        Debug.Log("tapis");
-        foreach (ItemStruct _item in listItems)
+        if (debug) Debug.Log("tapis");
+        if (currentItemNumber <= 0) return;
+        //foreach (ItemStruct _item in listItems)
+        //{
+        //    OutputAtContainer(new ItemStruct(_item.Item, 1), outputLoc);
+        //}
+        int _size = listItems.Count;
+        if (_size <= 0) return;
+        for (int i = 0; i < _size; i++)
         {
-            OutputAtContainer(new ItemStruct(_item.Item, 1), outputLoc);
+            OutputAtContainer(new ItemStruct(listItems[i].Item, 1), outputLoc);
         }
     }
 
@@ -34,6 +37,8 @@ public class MonoOutputContainer : BaseOutputContainer
     {
         outputLoc = objectRef.GridManager.GetGridPos2D(transform.position + transform.right);
     }
+
+  
 
 
 

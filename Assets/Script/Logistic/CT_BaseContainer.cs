@@ -1,34 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
-using Unity.VisualScripting;
-using UnityEngine;
-using static UnityEditor.FilePathAttribute;
-using static UnityEditor.Progress;
 
-public abstract class BaseContainer : MonoBehaviour
+using UnityEngine;
+
+
+public abstract class CT_BaseContainer : MonoBehaviour
 {
     [SerializeField] protected List<ItemStruct> listItems = null;
     [SerializeField] protected float maxItem = 30,currentItemNumber=0;
-    [SerializeField] protected BaseObject objectRef = null;
+    [SerializeField] protected Object_BaseObject objectRef = null;
+    [SerializeField] protected bool debug = false;
+    [SerializeField] protected const string inputContainerClassName = "CT_InputContainer";
 
-    public Action addItemEvent = null;
+
+    public Action<ItemStruct> OnAddItemEvent = null;
+    public Action<ItemStruct> OnRemoveItemEvent = null;
+    public Action OnInventoryUpdate=null;
     public float CurrentItemNumber => currentItemNumber;
-    public BaseObject ObjectRef => objectRef;
+    public Object_BaseObject ObjectRef => objectRef;
     public List<ItemStruct> ListItems => listItems;
 
 
      protected virtual void Start()
-    {
+     {
         InitCurrentItemNumber();
-        objectRef = GetComponent<BaseObject>();
-    }
+        objectRef = GetComponent<Object_BaseObject>();
+     }
 
     public virtual bool CanAddItem(ItemStruct _items)
     {
         //if not enough place 
-        return ((currentItemNumber + _items.Number) < maxItem);
+        return ((currentItemNumber + _items.Number) <= maxItem);
     }
 
     public virtual bool CanRemoveItem(ItemStruct _items)
@@ -74,6 +77,8 @@ public abstract class BaseContainer : MonoBehaviour
                 {
                     listItems.RemoveAt(i);
                 }
+                OnRemoveItemEvent?.Invoke(_items);
+                OnInventoryUpdate?.Invoke();
                 return;
             }
         }
@@ -92,17 +97,21 @@ public abstract class BaseContainer : MonoBehaviour
             {
                 listItems[i] = new ItemStruct(listItems[i].Item, listItems[i].Number + _items.Number);
                 currentItemNumber += _items.Number;
+                OnAddItemEvent?.Invoke(_items);
+                OnInventoryUpdate?.Invoke();
+
                 //Debug.Log(gameObject);
                 return;
             }
         }
-
         //if not already in the container
         listItems.Add(_items);
         currentItemNumber += _items.Number;
+        OnAddItemEvent?.Invoke(_items);
+        OnInventoryUpdate?.Invoke();
 
     }
 
-  
+
 
 }
